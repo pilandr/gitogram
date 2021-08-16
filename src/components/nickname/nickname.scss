@@ -1,0 +1,20 @@
+.c-nickname {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.nickname__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 14px;
+}
+
+.nickname__name {
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 18px;
+  color: #262626;
+}

@@ -1,0 +1,15 @@
+.c-user-icons{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-icons__element{
+  margin-right: 24px;
+  cursor: pointer;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
