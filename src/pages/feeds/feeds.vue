@@ -23,6 +23,20 @@
     </topline>
   </div>
   <ul class="columns">
+    <li class="columns-item" v-for="repos in repositories" :key="repos.id">
+      <column :nick="repos.owner.login" :path="repos.owner.avatar_url" comments="">
+        <template #description>
+          <div class="column__content">
+            <div class="column__title" v-text="repos.name"></div>
+            <div class="column__description" v-text="repos.description">
+            </div>
+            <div class="column__starpanel"><starpanel :nstar="repos.stargazers_count" :nfork="repos.forks_count"></starpanel></div>
+          </div>
+        </template>
+      </column>
+    </li>
+  </ul>
+  <!-- <ul class="columns">
     <li class="columns-item" v-for="datauser in datausers" :key="datauser.id">
       <column :nick="datauser.username" :path="datauser.avatar" :comments="datauser.feeds">
         <template #description>
@@ -35,17 +49,15 @@
         </template>
       </column>
     </li>
-  </ul>
-    <!-- <column nick="Camille" path="https://picsum.photos/44/44">
-      <template #description>
-        <div class="column__content">
-          <div class="column__title">Vue.js</div>
-          <div class="column__description">
-            JavaScript framework for building interactive web applications ⚡
-          </div>
-        </div>
-      </template>
-    </column> -->
+  </ul> -->
+  <!-- <ul class="list">
+    <li class="item" v-for="repos in repositories" :key="repos.id">
+      <repo
+        v-bind="getReposData (repos)"
+      />
+    </li>
+  </ul> -->
+  <slide />
 </template>
 
 <script>
@@ -57,6 +69,9 @@ import logo from '../../components/logo/logo.vue'
 import profileicons from '../../components/profile-icons/profile-icons.vue'
 import column from '../../components/column/column.vue'
 import starpanel from '../../components/star-panel/star-panel.vue'
+import * as api from '../../api'
+//  import repo from '../../components/repo/repo.vue'
+import slide from '../../components/slide/slide.vue'
 
 export default {
   name: 'feeds',
@@ -66,12 +81,34 @@ export default {
     column,
     logo,
     profileicons,
-    starpanel
+    starpanel,
+    //  repo,
+    slide
   },
   data () {
     return {
       stories,
-      datausers
+      datausers,
+      repositories: []
+    }
+  },
+  methods: {
+    getReposData (repos) {
+      return {
+        title: repos.name,
+        description: repos.description,
+        username: repos.owner.login,
+        stars: repos.stargazers_count
+      }
+    }
+  },
+  async created () {
+    try {
+      const { data } = await api.trendings.getTrendings()
+      this.repositories = data.items
+      console.log(this.repositories)
+    } catch (error) {
+      console.log(error)
     }
   }
 }
