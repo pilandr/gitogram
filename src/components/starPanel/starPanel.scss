@@ -1,10 +1,10 @@
-.c-starpanel {
+.c-starPanel {
     display: inline-flex;
     background: #fafbfc;
     border: 1px solid rgba(27, 31, 35, 0.15);
     border-radius: 6px 6px 6px 6px;
 }
-.starpanel__item {
+.starPanel__item {
     font-weight: normal;
     font-size: 14px;
     padding: 2px 12px 2px 12px;
@@ -28,14 +28,14 @@
     }
 }
 
-.starpanel__star {
+.starPanel__star {
     &::before{
 
     }
 }
-.starpanel__nstar {
+.starPanel__nstar {
 }
-.starpanel__fork {
+.starPanel__fork {
 }
-.starpanel__nfork {
+.starPanel__nfork {
 }

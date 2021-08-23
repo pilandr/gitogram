@@ -22,4 +22,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped src="./profile-icons.scss"></style>
+<style lang="scss" scoped src="./profileIcons.scss"></style>

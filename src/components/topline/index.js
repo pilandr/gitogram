@@ -1,1 +1,1 @@
-export { default as topline } from './topline.vue'
+export { default as topLine } from './topline.vue'

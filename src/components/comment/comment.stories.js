@@ -1,7 +1,7 @@
-import comment from "./comment.vue"
+import comment from './comment.vue'
 
 export default {
-  title: "comment",
+  title: 'comment',
   components: { comment }
 }
 
@@ -10,6 +10,12 @@ export const defaultView = () => ({
     comment
   },
   template: `
-    <comment />
+    <comment 
+      username="Some username" 
+      text="Some text" 
+    />
   `
-});
+})
+defaultView.story = {
+  name: 'Комментарии'
+}

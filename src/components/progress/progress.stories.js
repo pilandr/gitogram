@@ -5,8 +5,8 @@ export default {
   component: progress,
   argTypes: {
     onFinish: {
-      action: "onFinish",
-      description: "after full progress"
+      action: 'onFinish',
+      description: 'after full progress'
     }
   }
 }
@@ -16,8 +16,7 @@ const template = (args) => ({
   data () {
     return { args }
   },
-  template: `<x-progress @onFinish="args.onFinish" />`
+  template: '<x-progress @onFinish="args.onFinish" />'
 })
 
 export const Default = template.bind({})
-

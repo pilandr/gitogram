@@ -1,1 +1,0 @@
-export { default as starpanel } from './star-panel.vue'

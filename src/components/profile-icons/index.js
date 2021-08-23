@@ -1,1 +1,0 @@
-export { default as profileicons } from './profile-icons.vue'
