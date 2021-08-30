@@ -3,7 +3,9 @@
     <topLine>
       <template #headline>
         <div class="topline___header">
-          <logo></logo>
+          <div class="topline__logo">
+            <logo color='black'></logo>
+          </div>
           <div class="topline__user-icons">
             <profileIcons></profileIcons>
           </div>
@@ -15,7 +17,7 @@
             <story-user-item
               :avatar="story.owner.avatar_url"
               :username="story.owner.login"
-              @onPress="handlePress(story.id)"
+              @onPress="$router.push({name: 'storiesMain', params: {initialSlide: story.id}})"
             />
           </li>
         </ul>
@@ -36,7 +38,6 @@
       </column>
     </li>
   </ul>
-  <slide />
 </template>
 
 <script>
@@ -47,7 +48,6 @@ import profileIcons from '@/components/profileIcons/profileIcons.vue'
 import column from '@/components/column/column.vue'
 import starPanel from '@/components/starPanel/starPanel.vue'
 import * as api from '@/api'
-import slide from '@/components/slide/slide.vue'
 
 export default {
   name: 'feeds',
@@ -57,8 +57,7 @@ export default {
     column,
     logo,
     profileIcons,
-    starPanel,
-    slide
+    starPanel
   },
   data () {
     return {
@@ -79,7 +78,6 @@ export default {
     try {
       const { data } = await api.trendings.getTrendings()
       this.repositories = data.items
-      console.log(this.repositories)
     } catch (error) {
       console.log(error)
     }

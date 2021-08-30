@@ -1,0 +1,25 @@
+.c-storiesMain {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(0deg, #101010, #101010);;
+}
+
+.header{
+  padding-top: 45px;
+  margin-bottom: 130px;
+}
+
+.header__row {
+  display: flex;
+  justify-content: space-between;
+}
+
+// .content {
+//   height: 100%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }

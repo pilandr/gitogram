@@ -3,6 +3,10 @@
   justify-content: space-between;
 }
 
+.topline__logo {
+  
+}
+
 .icon {
   color: red;
   width: 50px;
@@ -40,4 +44,9 @@
   font-size: 14px;
   line-height: 160%;
   margin-bottom: 28px;
+}
+
+.slide {
+  display: flex;
+  justify-content: center;
 }
