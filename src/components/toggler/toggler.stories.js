@@ -16,7 +16,7 @@ const template = (args) => ({
   data () {
     return { args }
   },
-  template: `<toggler @onToggle="args.onToggle" />`,
+  template: '<toggler @onToggle="args.onToggle" />'
 })
 
 export const Default = template.bind({})

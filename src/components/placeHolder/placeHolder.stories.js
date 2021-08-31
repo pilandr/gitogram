@@ -2,7 +2,7 @@ import placeHolder from './placeHolder.vue'
 
 export default {
   title: 'placeHolder',
-  component: placeHolder,
+  component: placeHolder
 }
 
 const template = () => ({
@@ -24,5 +24,3 @@ export const DefaultParagraph = templateWithParagraph.bind({})
 DefaultParagraph.story = {
   name: 'С параграфами'
 }
-
-

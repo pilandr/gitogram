@@ -17,5 +17,5 @@ export const defaultView = () => ({
   `
 })
 defaultView.story = {
-  name: "Элемент слайдера"
+  name: 'Элемент слайдера'
 }

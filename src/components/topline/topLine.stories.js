@@ -21,21 +21,21 @@ export const defaultView = () => ({
   `
 })
 defaultView.story = {
-  name: "Шапка с двумя уровнями"
+  name: 'Шапка с двумя уровнями'
 }
 
 export const defaultViewOne = () => ({
-    components: {
-      topLine
-    },
-    template: `
+  components: {
+    topLine
+  },
+  template: `
       <topLine>
           <template #headline>
               <h1>Some text</h1>
           </template>
       </topLine>
     `
-  })
-  defaultViewOne.story = {
-    name: "Шапка с одним уровнем"
-  }
+})
+defaultViewOne.story = {
+  name: 'Шапка с одним уровнем'
+}

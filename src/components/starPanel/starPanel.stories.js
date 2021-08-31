@@ -17,5 +17,5 @@ export const defaultView = () => ({
   `
 })
 defaultView.story = {
-  name: "Панель звезд и fork"
+  name: 'Панель звезд и fork'
 }

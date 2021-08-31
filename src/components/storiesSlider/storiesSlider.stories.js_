@@ -1,0 +1,18 @@
+import storiesSlider from './storiesSlider.vue'
+
+export default {
+  title: 'storiesSlider',
+  components: { storiesSlider }
+}
+
+export const defaultView = () => ({
+  components: {
+    storiesSlider
+  },
+  template: `
+  <storiesSlider />
+  `
+})
+defaultView.story = {
+  name: 'Слайдер с инициализацией слайда'
+}
