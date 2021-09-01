@@ -1,21 +1,3 @@
-// import slide from './slide.vue'
-// export default {
-//   title: 'slide',
-//   component: slide
-// }
-
-// export const defaultView = () => ({
-//   components: {
-//     slide
-//   },
-//   template: `
-//     <slide data={username: 'hello'}
-//     />
-//   `
-// })
-// defaultView.story = {
-//   name: 'slide'
-// }
 import slide from './slide.vue'
 
 export default {

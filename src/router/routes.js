@@ -1,11 +1,11 @@
 import { feeds } from '../pages/feeds/index'
-import { storiesMain } from '../components/storiesMain/'
+import { stories } from '../pages/stories'
 export default [{
   path: '/',
   component: feeds
 },
 {
-  path: '/storiesMain',
-  component: storiesMain,
-  name: 'storiesMain'
+  path: '/stories',
+  component: stories,
+  name: 'stories'
 }]

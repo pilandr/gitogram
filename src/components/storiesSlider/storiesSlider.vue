@@ -117,7 +117,9 @@ export default {
       )
       await this.handleSlide(ndx)
     }
-    await this.fetchTrendings()
+    if (!this.trendings.length) {
+      await this.fetchTrendings()
+    }
     await this.loadReadme()
   }
 }

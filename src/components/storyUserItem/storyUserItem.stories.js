@@ -2,7 +2,13 @@ import storyUserItem from './storyUserItem.vue'
 
 export default {
   title: 'storyUserItem',
-  components: { storyUserItem }
+  components: { storyUserItem },
+  argTypes: {
+    onPress: {
+      action: 'onPress',
+      description: 'after press'
+    }
+  }
 }
 
 export const defaultView = () => ({
@@ -17,5 +23,26 @@ export const defaultView = () => ({
   `
 })
 defaultView.story = {
-  name: 'Элемент слайдера'
+  name: 'Стори без нажатия'
+}
+
+export const ViewWithPress = (args) => ({
+  components: {
+    storyUserItem
+  },
+  data () {
+    return {
+      args
+    }
+  },
+  template: `
+    <storyUserItem 
+      avatar="https://picsum.photos/100/100"
+      username="some nickname"
+      @onPress="args.onPress"
+    />
+  `
+})
+ViewWithPress.story = {
+  name: 'Стори с нажатием'
 }

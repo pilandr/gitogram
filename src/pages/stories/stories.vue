@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import { storiesSlider } from '../storiesSlider/index.js'
+import { storiesSlider } from '../../components/storiesSlider/index.js'
 import { logo } from '../../components/logo/index.js'
-import { icon } from '../../icons/'
+import { icon } from '../../icons'
 
 export default {
   name: 'storiesMain',
@@ -40,4 +40,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped src="./storiesMain.scss"></style>
+<style lang="scss" scoped src="./stories.scss"></style>
