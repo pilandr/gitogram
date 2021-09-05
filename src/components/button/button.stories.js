@@ -16,7 +16,7 @@ const template = (args) => ({
     return { args }
   },
   template: `
-    <x-button v-bind="args">Following</x-button>
+    <x-button v-bind="args" theme="gray" loading @onPress="$emit('onPress')">Following</x-button>
   `
 })
 

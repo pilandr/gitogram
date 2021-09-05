@@ -18,7 +18,13 @@
       </div>
     </div>
     <div class="footer">
-      <xButton hoverText="Unfollow">Following</xButton>
+      <xButton
+        :theme="data.following.status ? 'gray' : 'green'"
+        :loading="data.following.loading"
+        @onClick="$emit(data.following.status ? 'onUnfollow' : 'onFollow', data.id)"
+      >
+        {{data.following.status ? 'Unfollow' : 'follow'}}
+      </xButton>
     </div>
     <template v-if="active">
       <button
@@ -61,7 +67,7 @@ export default {
     placeHolder,
     icon
   },
-  emits: ['onNextSlide', 'onPrevSlide', 'onProgressFinish'],
+  emits: ['onNextSlide', 'onPrevSlide', 'onProgressFinish', 'onFollow'],
   props: {
     active: Boolean,
     loading: Boolean,

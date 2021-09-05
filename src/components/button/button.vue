@@ -1,24 +1,42 @@
 <template>
   <button
     :class="[
-      'c-button', `theme-green`,
-      {'hover-text': withHoverText}
+      'c-button', theme,
+      {'hover-text': withHoverText},
+      {'loading': loading}
     ]"
     :data-hover-text="hoverText"
+    :disabled="isDisabled"
+    @click="$emit('onClick')"
   >
-    <span class="btn-text">
+    <div class="button__loading" v-if="loading">
+      <spinner />
+    </div>
+    <span class="btn-text" v-else>
       <slot></slot>
     </span>
   </button>
 </template>
 
 <script>
-
+import spinner from '../spinner/spinner.vue'
 export default {
   name: 'Button',
+  components: {
+    spinner
+  },
   props: {
     hoverText: {
       type: String
+    },
+    theme: {
+      type: String
+    },
+    loading: {
+      type: Boolean
+    },
+    isDisabled: {
+      type: Boolean
     }
   },
   computed: {

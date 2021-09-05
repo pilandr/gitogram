@@ -25,7 +25,7 @@
     </topLine>
   </div>
   <ul class="columns">
-    <li class="columns-item" v-for="repos in this.trendings" :key="repos.id">
+    <li class="columns-item" v-for="repos in this.starred" :key="repos.id">
       <column :nick="repos.owner.login" :path="repos.owner.avatar_url" comments="">
         <template #description>
           <div class="column__content">
@@ -65,12 +65,14 @@ export default {
   },
   computed: {
     ...mapState({
-      trendings: state => state.data
+      trendings: state => state.data,
+      starred: state => state.likedOfMe
     })
   },
   methods: {
     ...mapActions({
-      fetchTrendings: 'fetchTrendings'
+      fetchTrendings: 'fetchTrendings',
+      fetchLikedOfMe: 'fetchLikedOfMe'
     }),
     getReposData (repos) {
       return {
@@ -86,6 +88,7 @@ export default {
       if (!this.trendings.length) {
         await this.fetchTrendings()
       }
+    await this.fetchLikedOfMe()
     } catch (error) {
       console.log(error)
     }

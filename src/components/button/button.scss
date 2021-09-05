@@ -1,5 +1,7 @@
 .c-button {
-  //padding: 10px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: bold;
   font-size: 16px;
   line-height: 22px;
@@ -11,11 +13,18 @@
   height: 45px;
   transition: 1s;
 
-  &.theme-green {
+  &.green {
     background: #31AE54;
   }
 
-  &.theme-green:hover {
+  &.green:hover {
+    background: #9E9E9E;
+  }
+  &.gray {
+    background: #9E9E9E;;
+  }
+
+  &.gray:hover {
     background: #9E9E9E;
   }
   &.hover-text:hover:after {
@@ -28,6 +37,18 @@
   &.hover-text:hover .btn-text {
     font-size: 0;
   }
+  &.loading.hover-text:hover .btn-text {
+    font-size: 0;
+  }
+  &.loading.hover-text::after {
+    font-size: 0;
+  }
+}
+
+.button__loading {
+  width: 18px;
+  height: 18px;
+  color: #FFFFFF;
 }
 
 
