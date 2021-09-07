@@ -4,9 +4,27 @@ import * as api from '../api'
 export default createStore({
   state: {
     data: [],
-    likedOfMe: []
+    likedOfMe: [],
+    user: {}
   },
   mutations: {
+    SET_USER: (state, user) => {
+      state.user = user
+    },
+    SET_ISSUES: (state, issues) => {
+      state.likedOfMe = state.likedOfMe.map((item) => {
+        if (item.id === issues.idOwner) {
+          item.issuesList = []
+          for (let i = 0; i < issues.length; i++) {
+            item.issuesList.push({
+              nick: issues[i].user.login,
+              comment: issues[i].title
+            })
+          }
+        }
+        return item
+      })
+    },
     SET_TRENDINGS: (state, trendings) => {
       state.data = trendings.map((item) => {
         item.following = {
@@ -43,9 +61,40 @@ export default createStore({
   getters: {
     getRepoById: (state) => (id) => {
       return state.data.find(item => item.id === id)
+    },
+    getUnstarredOnly (state) {
+      return state.data.filter((trendingsRepo) => {
+        return !state.likedOfMe.some(starredRepo => {
+          return trendingsRepo.id === starredRepo.id
+        })
+      })
     }
   },
   actions: {
+    logout () {
+      console.log('logoutq')
+      localStorage.removeItem('token')
+      window.location.reload()
+    },
+    async fetchUser ({ state, commit, rootState }) {
+      try {
+        const { data } = await api.user.getUser()
+        commit('SET_USER', data)
+      } catch (e) {
+        console.log(e)
+        throw e
+      }
+    },
+    async fetchIssue ({ state, commit, rootState }, { id, owner, repo }) {
+      try {
+        const { data } = await api.issue.getIssue({ owner, repo })
+        data.idOwner = id
+        commit('SET_ISSUES', data)
+      } catch (e) {
+        console.log(e)
+        throw e
+      }
+    },
     async fetchTrendings ({ state, commit, rootState }) {
       try {
         const { data } = await api.trendings.getTrendings()

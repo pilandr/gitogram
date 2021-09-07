@@ -8,7 +8,7 @@
         <slot name="description" />
       </div>
       <div class="column__feed">
-        <feed :comments="comments"></feed>
+        <feed :comments="comments" @tooggleIssues="toogle"></feed>
       </div>
     </div>
   </div>
@@ -21,9 +21,15 @@ import feed from '../feed/feed.vue'
 export default {
   name: 'column',
   props: ['nick', 'path', 'comments'],
+  emits: ['tooggleIssues'],
   components: {
     nickname,
     feed
+  },
+  methods: {
+    toogle (isOpen) {
+      this.$emit('tooggleIssues', isOpen)
+    }
   }
 }
 </script>

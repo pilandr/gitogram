@@ -7,13 +7,13 @@
             <logo color='black'></logo>
           </div>
           <div class="topline__user-icons">
-            <profileIcons></profileIcons>
+            <profileIcons :source="this.user?.avatar_url" @onLogout="logout"></profileIcons>
           </div>
         </div>
       </template>
       <template #content>
         <ul class="stories">
-          <li class="stories-item" v-for="story in this.trendings" :key="story.id">
+          <li class="stories-item" v-for="story in getUnstarredOnly" :key="story.id">
             <story-user-item
               :avatar="story.owner.avatar_url"
               :username="story.owner.login"
@@ -26,7 +26,7 @@
   </div>
   <ul class="columns">
     <li class="columns-item" v-for="repos in this.starred" :key="repos.id">
-      <column :nick="repos.owner.login" :path="repos.owner.avatar_url" comments="">
+      <column :nick="repos.owner.login" :path="repos.owner.avatar_url" :comments="repos.issuesList" @tooggleIssues='tooggleIssues(repos, $event)'>
         <template #description>
           <div class="column__content">
             <div class="column__title" v-text="repos.name"></div>
@@ -47,7 +47,7 @@ import logo from '@/components/logo/logo.vue'
 import profileIcons from '@/components/profileIcons/profileIcons.vue'
 import column from '@/components/column/column.vue'
 import starPanel from '@/components/starPanel/starPanel.vue'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'feeds',
@@ -66,13 +66,18 @@ export default {
   computed: {
     ...mapState({
       trendings: state => state.data,
-      starred: state => state.likedOfMe
-    })
+      starred: state => state.likedOfMe,
+      user: state => state.user
+    }),
+    ...mapGetters(['getUnstarredOnly'])
   },
   methods: {
     ...mapActions({
       fetchTrendings: 'fetchTrendings',
-      fetchLikedOfMe: 'fetchLikedOfMe'
+      fetchLikedOfMe: 'fetchLikedOfMe',
+      fetchUser: 'fetchUser',
+      logout: 'logout',
+      fetchIssue: 'fetchIssue'
     }),
     getReposData (repos) {
       return {
@@ -80,6 +85,15 @@ export default {
         description: repos.description,
         username: repos.owner.login,
         stars: repos.stargazers_count
+      }
+    },
+    async tooggleIssues (repos, event) {
+      if (event && !Object.prototype.hasOwnProperty.call(repos, 'issuesList')) {
+        try {
+          await this.fetchIssue({ id: repos.id, owner: repos.owner.login, repo: repos.name })
+        } catch (error) {
+          console.log(error)
+        }
       }
     }
   },
@@ -89,6 +103,7 @@ export default {
         await this.fetchTrendings()
       }
     await this.fetchLikedOfMe()
+    // await this.fetchUser()
     } catch (error) {
       console.log(error)
     }
