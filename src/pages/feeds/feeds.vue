@@ -7,7 +7,7 @@
             <logo color='black'></logo>
           </div>
           <div class="topline__user-icons">
-            <profileIcons :source="this.user?.avatar_url" @onLogout="logout"></profileIcons>
+            <profileIcons :source="this.user?.avatar_url" @onLogout="logout" @onUser="$router.push({name: 'profile'})" @onHome="$router.push({name: 'feeds'})"></profileIcons>
           </div>
         </div>
       </template>

@@ -5,11 +5,15 @@ export default createStore({
   state: {
     data: [],
     likedOfMe: [],
-    user: {}
+    user: {},
+    userRepos: []
   },
   mutations: {
     SET_USER: (state, user) => {
       state.user = user
+    },
+    SET_USER_REPOS: (state, userRepos) => {
+      state.userRepos = userRepos
     },
     SET_ISSUES: (state, issues) => {
       state.likedOfMe = state.likedOfMe.map((item) => {
@@ -62,6 +66,9 @@ export default createStore({
     getRepoById: (state) => (id) => {
       return state.data.find(item => item.id === id)
     },
+    getRepoByIdStarred: (state) => (id) => {
+      return state.likedOfMe.find(item => item.id === id)
+    },
     getUnstarredOnly (state) {
       return state.data.filter((trendingsRepo) => {
         return !state.likedOfMe.some(starredRepo => {
@@ -80,6 +87,15 @@ export default createStore({
       try {
         const { data } = await api.user.getUser()
         commit('SET_USER', data)
+      } catch (e) {
+        console.log(e)
+        throw e
+      }
+    },
+    async fetchUserRepos ({ state, commit, rootState }) {
+      try {
+        const { data } = await api.user.getUserRepos()
+        commit('SET_USER_REPOS', data)
       } catch (e) {
         console.log(e)
         throw e
@@ -107,6 +123,7 @@ export default createStore({
     async fetchLikedOfMe ({ state, commit, rootState }) {
       try {
         const { data } = await api.starred.getStarredRepos(10)
+        console.log(data)
         commit('SET_STARRED', data)
       } catch (e) {
         console.log(e)
@@ -163,6 +180,7 @@ export default createStore({
       }
     },
     async unStarRepo ({ commit, getters }, id) {
+      // const { name: repo, owner } = getters.getRepoByIdStarred(id)
       const { name: repo, owner } = getters.getRepoById(id)
 
       commit('SET_FOLLOWING', {
@@ -198,6 +216,17 @@ export default createStore({
             loading: false
           }
         })
+      }
+    },
+    async unStarStarred ({ commit, getters }, id) {
+      const { name: repo, owner } = getters.getRepoByIdStarred(id)
+
+      try {
+        console.log('unStar')
+        await api.starred.unStarRepo({ owner: owner.login, repo })
+      } catch (error) {
+        console.log(error)
+      } finally {
       }
     }
   }

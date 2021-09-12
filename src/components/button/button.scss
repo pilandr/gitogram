@@ -43,6 +43,10 @@
   &.loading.hover-text::after {
     font-size: 0;
   }
+  &.small {
+    width: 115px;
+    height: 42px;
+  }
 }
 
 .button__loading {

@@ -9,3 +9,12 @@ export const getUser = () => {
     }
   })
 }
+export const getUserRepos = () => {
+  const contentHeader = 'application/vnd.github.v3.html+json'
+  return makeRequest({
+    url: '/user/repos',
+    headers: {
+      accept: contentHeader
+    }
+  })
+}

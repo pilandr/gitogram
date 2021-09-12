@@ -3,7 +3,8 @@
     :class="[
       'c-button', theme,
       {'hover-text': withHoverText},
-      {'loading': loading}
+      {'loading': loading},
+      {'small': isSmall},
     ]"
     :data-hover-text="hoverText"
     :disabled="isDisabled"
@@ -36,6 +37,9 @@ export default {
       type: Boolean
     },
     isDisabled: {
+      type: Boolean
+    },
+    isSmall: {
       type: Boolean
     }
   },
