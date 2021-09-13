@@ -17,7 +17,7 @@
           <div class="left">
             <div class="left__content">
                 <div class="left__title">My profile</div>
-                <profileNickname :name="this.user.login" :source="this.user.avatar_url" :repCount="this.user.public_repos" :watchCount="this.starred.length" :realName="this.user.bio" @onClickReposts="$router.push({name: 'profile'})" :isActive="true" />
+                <profileNickname :loading="loading" :name="this.user.login" :source="this.user.avatar_url" :repCount="this.user.public_repos" :watchCount="this.starred.length" :realName="this.user.bio" @onClickReposts="$router.push({name: 'profile'})" :isActive="true" />
             </div>
           </div>
           <div class="right">
@@ -26,7 +26,12 @@
                 <div class="right__title">Following</div>
                 <div class="right__countRepo" v-text="this.starred.length"></div>
               </div>
-              <ul class="following__list">
+              <div class="right__container-loading" v-if="this.loading">
+                <div class="right__loading">
+                  <spinner />
+                </div>
+              </div>
+              <ul class="following__list" v-else>
                 <li class="following__item" v-for="repos in this.starred" :key="repos.id">
                    <div class="follow">
                     <div class="user">
@@ -39,11 +44,12 @@
                       </div>
                     </div>
                     <xButton
-                      theme="green"
                       isSmall
-                      @onClick="unFollow(repos.id)"
+                      :theme="repos.following?.status ? 'gray' : 'green'"
+                      :loading="repos.following?.loading"
+                      @onClick="repos.following?.status ? starStarred(repos.id) : unStarStarred(repos.id)"
                     >
-                      following
+                      {{repos.following?.status ? 'unFollowing' : 'following'}}
                     </xButton>
                   </div>
                 </li>
@@ -61,7 +67,9 @@ import logo from '@/components/logo/logo.vue'
 import profileIcons from '@/components/profileIcons/profileIcons.vue'
 import profileNickname from '@/components/profileNickname/profileNickname.vue'
 import button from '@/components/button/button.vue'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import spinner from '@/components/spinner/spinner.vue'
+import { useStore } from 'vuex'
+import { ref, onMounted, computed } from 'vue'
 
 export default {
   name: 'profile',
@@ -70,44 +78,37 @@ export default {
     logo,
     profileIcons,
     profileNickname,
-    xButton: button
+    xButton: button,
+    spinner
   },
-  data () {
-    return {
+  setup () {
+    const { dispatch, state } = useStore()
+    const loading = ref(true)
+    const logout = () => {
+      dispatch('logout')
     }
-  },
-  computed: {
-    ...mapState({
-      starred: state => state.likedOfMe,
-      user: state => state.user
-    }),
-    ...mapGetters(['getUnstarredOnly'])
-  },
-  methods: {
-    ...mapActions({
-      fetchLikedOfMe: 'fetchLikedOfMe',
-      fetchUser: 'fetchUser',
-      logout: 'logout',
-      unStarStarred: 'unStarStarred'
-    }),
-    getReposData (repos) {
-      return {
-        title: repos.name,
-        description: repos.description,
-        username: repos.owner.login,
-        stars: repos.stargazers_count
+    const unStarStarred = (id) => {
+      dispatch('unStarStarred', id)
+    }
+    const starStarred = (id) => {
+      dispatch('starStarred', id)
+    }
+    onMounted(() => {
+      try {
+        dispatch('fetchUser')
+        dispatch('fetchLikedOfMe')
+        loading.value = false
+      } catch (error) {
+        console.log(error)
       }
-    },
-    async unFollow (repos) {
-      this.unStarStarred(repos)
-    }
-  },
-  async created () {
-    try {
-    await this.fetchLikedOfMe()
-    await this.fetchUser()
-    } catch (error) {
-      console.log(error)
+    })
+    return {
+      loading,
+      starred: computed(() => state.likedOfMe),
+      user: computed(() => state.user),
+      logout,
+      unStarStarred,
+      starStarred
     }
   }
 }

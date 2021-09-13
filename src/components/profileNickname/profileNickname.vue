@@ -5,7 +5,8 @@
     </div>
     <div class="nickname__content">
       <div class="nickname__name">{{name}}</div>
-      <div class="nickname__data">
+      <div class="nickname__loading" v-if="loading"></div>
+      <div class="nickname__data" v-else>
         <div class="col">
           <div class="col__count">{{repCount ? repCount : 0}}</div>
           <div class="col__name">
@@ -28,7 +29,7 @@
 // import button from '../button/button.vue'
 export default {
   // components: { button },
-  props: ['name', 'source', 'repCount', 'watchCount', 'realName', 'isActive']
+  props: ['name', 'source', 'repCount', 'watchCount', 'realName', 'isActive', 'loading']
 }
 </script>
 

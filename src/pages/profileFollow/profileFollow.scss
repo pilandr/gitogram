@@ -60,6 +60,17 @@
   line-height: 28px;
 }
 
+.right__container-loading {
+  display: flex;
+  justify-content: center;
+}
+
+.right__loading {
+  color: #31AE54;
+  width: 40px;
+  height: 40px;
+}
+
 .repos__item {
   margin-bottom: 18px;
 
