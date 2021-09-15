@@ -26,7 +26,7 @@
   </div>
   <ul class="columns">
     <li class="columns-item" v-for="repos in this.starred" :key="repos.id">
-      <column :nick="repos.owner.login" :path="repos.owner.avatar_url" :comments="repos.issuesList" @tooggleIssues='tooggleIssues(repos, $event)'>
+      <column :nick="repos.owner.login" :path="repos.owner.avatar_url" :comm="getRepoOwner(repos)" @tooggleIssues='tooggleIssues(repos, $event)'>
         <template #description>
           <div class="column__content">
             <div class="column__title" v-text="repos.name"></div>
@@ -39,7 +39,6 @@
     </li>
   </ul>
 </template>
-
 <script>
 import { topLine } from '@/components/topline'
 import { storyUserItem } from '@/components/storyUserItem'
@@ -48,7 +47,6 @@ import profileIcons from '@/components/profileIcons/profileIcons.vue'
 import column from '@/components/column/column.vue'
 import starPanel from '@/components/starPanel/starPanel.vue'
 import { mapState, mapActions, mapGetters } from 'vuex'
-
 export default {
   name: 'feeds',
   components: {
@@ -87,6 +85,12 @@ export default {
         stars: repos.stargazers_count
       }
     },
+    getRepoOwner (repos) {
+      return {
+        repo: repos.name,
+        owner: repos.owner.login
+      }
+    },
     async tooggleIssues (repos, event) {
       if (event && !Object.prototype.hasOwnProperty.call(repos, 'issuesList')) {
         try {
@@ -103,12 +107,11 @@ export default {
         await this.fetchTrendings()
       }
     await this.fetchLikedOfMe()
-    // await this.fetchUser()
+    await this.fetchUser()
     } catch (error) {
       console.log(error)
     }
   }
 }
 </script>
-
 <style src="./feeds.scss" lang="scss" scoped></style>

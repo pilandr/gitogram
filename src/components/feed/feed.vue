@@ -4,9 +4,9 @@
       <toggler @onToggle="toggle" />
     </div>
     <div class="comments" v-if="shown">
-      <ul class="comment-list" v-if="comments">
+      <ul class="comment-list" v-if="!loading">
         <li class="comments-item" v-for="(com, ind) in comments" :key="ind">
-          <comment :text="com.comment" :username="com.nick" />
+          <comment :text="com.title" :username="com.user.login" />
         </li>
       </ul>
       <div class="placeHolder-issue" v-else>
@@ -21,10 +21,19 @@
 <script>
 import Comment from '../comment/comment.vue'
 import Toggler from '../toggler/toggler.vue'
-
 export default {
   name: 'feed-item',
-  props: ['comments'],
+  props: {
+    comments: {
+      type: Array,
+      default: () => []
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    }
+  },
+  // ['comments'],
   emits: ['tooggleIssues'],
   components: {
     Comment,
@@ -38,7 +47,9 @@ export default {
   methods: {
     toggle (isOpened) {
       this.shown = isOpened
-      this.$emit('tooggleIssues', isOpened)
+      if (this.comments.length === 0) {
+        this.$emit('tooggleIssues', isOpened)
+      }
     }
   }
 }
