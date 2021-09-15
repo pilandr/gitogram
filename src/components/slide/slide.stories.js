@@ -27,7 +27,12 @@ const template = (args) => ({
         id: 'id',
         username: 'hello',
         userAvatar: 'https://picsum.photos/100/100',
-        content: '<H1>Content</H1>'
+        content: '<H1>Content</H1>',
+        following: {
+          status: false,
+          loading: false,
+          error: ''
+        }
       },
       args
     }
@@ -50,7 +55,12 @@ const templateActiveWithButtonR = (args) => ({
         id: 'id',
         username: 'hello',
         userAvatar: 'https://picsum.photos/100/100',
-        content: '<H1>Content</H1>'
+        content: '<H1>Content</H1>',
+        following: {
+          status: false,
+          loading: false,
+          error: ''
+        }
       },
       activeBtns: ['next'],
       args
@@ -79,7 +89,12 @@ const templateActiveWithButtonL = (args) => ({
         id: 'id',
         username: 'hello',
         userAvatar: 'https://picsum.photos/100/100',
-        content: '<H1>Content</H1>'
+        content: '<H1>Content</H1>',
+        following: {
+          status: false,
+          loading: false,
+          error: ''
+        }
       },
       activeBtns: ['prev'],
       args
@@ -107,7 +122,12 @@ const templateNoContent = (args) => ({
         id: 'id',
         username: 'hello',
         userAvatar: 'https://picsum.photos/100/100',
-        content: ''
+        content: '',
+        following: {
+          status: false,
+          loading: false,
+          error: ''
+        }
       },
       args
     }
@@ -130,7 +150,12 @@ const templateActive = (args) => ({
         id: 'id',
         username: 'hello',
         userAvatar: 'https://picsum.photos/100/100',
-        content: '<H1>Content</H1>'
+        content: '<H1>Content</H1>',
+        following: {
+          status: false,
+          loading: false,
+          error: ''
+        }
       },
       args
     }
@@ -157,7 +182,12 @@ const templateLoading = (args) => ({
         id: 'id',
         username: 'hello',
         userAvatar: 'https://picsum.photos/100/100',
-        content: '<H1>Content</H1>'
+        content: '<H1>Content</H1>',
+        following: {
+          status: false,
+          loading: false,
+          error: ''
+        }
       },
       args
     }
@@ -175,3 +205,60 @@ export const DefaultLoading = templateLoading.bind({})
 DefaultLoading.story = {
   name: 'Слайд с загрузкой без кнопок'
 }
+
+const templateStatus = (args) => ({
+  components: { slide },
+  data () {
+    return {
+      data: {
+        id: 'id',
+        username: 'hello',
+        userAvatar: 'https://picsum.photos/100/100',
+        content: '<H1>Content</H1>',
+        following: {
+          status: true,
+          loading: false,
+          error: ''
+        }
+      },
+      args
+    }
+  },
+  template: `<slide
+                    :data="data" 
+            />`
+})
+
+export const DefaultStatus = templateStatus.bind({})
+DefaultStatus.story = {
+  name: 'Слайд неактивный с нажатым состоянием'
+}
+
+const templateStatusLoad = (args) => ({
+  components: { slide },
+  data () {
+    return {
+      data: {
+        id: 'id',
+        username: 'hello',
+        userAvatar: 'https://picsum.photos/100/100',
+        content: '<H1>Content</H1>',
+        following: {
+          status: false,
+          loading: true,
+          error: ''
+        }
+      },
+      args
+    }
+  },
+  template: `<slide
+                    :data="data" 
+            />`
+})
+
+export const DefaultStatusLoad = templateStatusLoad.bind({})
+DefaultStatusLoad.story = {
+  name: 'Слайд неактивный с нажатой кнопкой во время загрузки'
+}
+

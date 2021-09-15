@@ -17,7 +17,7 @@
           <div class="left">
             <div class="left__content">
                 <div class="left__title">My profile</div>
-                <profileNickname :loading="loading" :name="this.user.login" :source="this.user.avatar_url" :repCount="this.user.public_repos" :watchCount="this.starred.length" :realName="this.user.bio" @onClickWatches="$router.push({name: 'profileFollow'})" :isActive="false" />
+                <profileNickname :loading="loading" :name="this.user.login" :source="this.user.avatar_url" :repCount="this.user.public_repos" :watchCount="this.starred.length" :realName="this.user.bio" @onClickWatches="toProfileFollow" :isActive="false" />
             </div>
           </div>
           <div class="right">
@@ -56,6 +56,7 @@ import profileNickname from '@/components/profileNickname/profileNickname.vue'
 import spinner from '@/components/spinner/spinner.vue'
 import { useStore } from 'vuex'
 import { ref, onMounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'profile',
@@ -69,9 +70,14 @@ export default {
   },
   setup () {
     const { dispatch, state } = useStore()
+    const router = useRouter()
     const loading = ref(true)
     const logout = () => {
       dispatch('logout')
+    }
+
+  const toProfileFollow = () => {
+      router.push({ name: 'profileFollow' })
     }
 
     onMounted(() => {
@@ -88,7 +94,8 @@ export default {
       starred: computed(() => state.likedOfMe),
       user: computed(() => state.user),
       userRepos: computed(() => state.userRepos),
-      logout
+      logout,
+      toProfileFollow
     }
   }
 }

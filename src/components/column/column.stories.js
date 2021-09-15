@@ -2,7 +2,7 @@ import column from './column.vue'
 
 export default {
   title: 'column',
-  component: { column }
+  component: { column },
 }
 
 const template = () => ({
@@ -10,14 +10,21 @@ const template = () => ({
   data () {
     return {
       comments: [{
-        nick: 'hello',
-        comment: 'world'
-      }]
+        title: 'some-title',
+        user: {
+          login: 'some-login'
+        }
+      }],
+      comm: {
+        repo: 'name',
+        owner: 'owner'
+      }
     }
   },
   template: `
     <column 
-      nick="Some nick" 
+      nick="Some nick"
+      :comm="comm"
       path="https://picsum.photos/100/100" 
       :comments="comments"
     >

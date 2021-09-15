@@ -4,7 +4,7 @@ import axios from 'axios'
 
 it('количество данных в компоненте совпадает с пришедшими', async () => {
 
-  jest.mock('axios', () => ({
+  const jestMock = jest.mock('axios', () => ({
     get: jest.fn(() => Promise.resolve({
       data: [{
         title: 'some-text',
@@ -24,12 +24,14 @@ it('количество данных в компоненте совпадает
           login: 'some-login'
         }
       }]
-    }))
+    })
+    )
   }))
 
   const wrapper = mount(column)
 
   expect(wrapper.find('.comments').exists()).toBe(false)
   await wrapper.find('.feed-toggler button').trigger('click')
-  expect(wrapper.findAll('.comments-item').length).toBe(3)
+  expect(wrapper.findAll('.placeHolder-issue').length).toBe(3)
+  
 })

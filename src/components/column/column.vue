@@ -18,6 +18,7 @@
 import nickname from '../nickname/nickname.vue'
 import feed from '../feed/feed.vue'
 import axios from 'axios'
+// import * as api from '../../api'
 
 export default {
   name: 'column',
@@ -35,7 +36,6 @@ export default {
   },
   methods: {
     async toogle (isOpen) {
-      // this.$emit('tooggleIssues', isOpen)
       this.loading = true
       const { data } = await axios.get(`https://api.github.com/repos/${this.comm.owner}/${this.comm.repo}/issues`, {
         headers: {
@@ -43,6 +43,8 @@ export default {
           accept: 'application/vnd.github.v3.html+json'
         }
       })
+      // const { data } = await api.issue.getIssue({ owner: this.comm.owner, repo: this.comm.repo })
+      // console.log(data)
       this.comments = data
       this.loading = false
     }
